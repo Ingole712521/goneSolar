@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --color-solar-blue-50: #eff6ff;
+  --color-solar-blue-600: #2563eb;
+  --color-solar-blue-700: #1d4ed8;
+  --color-solar-blue-900: #1e3a8a;
+  --color-solar-orange-100: #ffedd5;
+  --color-solar-orange-500: #f97316;
+  --color-solar-orange-600: #ea580c;
+  --color-solar-yellow-300: #fde047;
+  --color-solar-yellow-400: #facc15;
+}
+
+@layer base {
+  body {
+    @apply m-0 bg-solar-blue-50 text-slate-800 antialiased;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+}
