@@ -72,3 +72,49 @@ export default defineConfig([
 ])
 ```
 # goneSolar
+
+
+Consumer-> Deal Done -> Amount-> Registration  (Loan (Bank involve) / Cash ) / Site visit  -> Company for solar Panle (TATA . Adani waree ,  etc) -> Fitting -> Meter Installtion ->  
+->
+Subsidy for
+Residential Households
+Rs. 30,000 per kW
+up to 2 kW
+
+Rs. 18,000 per kW
+for additional capacity up to 3 kW
+
+Rs. 78,000
+Total subsidy for systems larger than 3 kW capped at
+
+
+-> Start using solar panel instant after meter installation 
+
+
+
+Pricing -> 
+Depend on company
+1.90 Lakh* and also depend  on site 
+
+
+-> Customer Photo with GSP location
+-> Happy faces of Customer 
+-> Testimonial 
+-> 
+Contact -> Visiting Card / call sign 
+
+Commerical Site also 
+also provide the service free of cost for 5 year , 25 year Performance ,  15 year  Inverter 
+
+
+
+
+
+
+
+
+
+
+
+
+Cost cutting ->  average 450 unit    3kw  is sufficient 
