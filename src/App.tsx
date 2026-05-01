@@ -178,7 +178,7 @@ function App() {
           >
             <video
               className="h-full min-h-[220px] w-full object-cover sm:min-h-[300px] lg:min-h-[440px]"
-              controls
+              autoPlay
               loop
               muted
               playsInline
