@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   MobileNav,
   MobileNavHeader,
@@ -57,6 +57,26 @@ function App() {
     { name: 'Contact', link: '#contact' },
   ]
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const howItWorksRef = useRef<HTMLElement | null>(null)
+  const [isHowItWorksVisible, setIsHowItWorksVisible] = useState(false)
+
+  useEffect(() => {
+    const sectionElement = howItWorksRef.current
+    if (!sectionElement) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setIsHowItWorksVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.2 }
+    )
+
+    observer.observe(sectionElement)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <div className="relative">
@@ -103,49 +123,92 @@ function App() {
       </Navbar>
 
       <main className="pt-20 text-slate-900">
-      <section id="features" className="bg-linear-to-r from-solar-blue-900 to-solar-blue-600 text-white">
-        <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-          <p className="mb-4 inline-block rounded-full bg-solar-yellow-300 px-4 py-1 text-sm font-semibold text-solar-blue-900">
-            Trusted Residential Solar Partner
-          </p>
-          <h1 className="max-w-3xl text-4xl font-bold leading-tight md:text-6xl">
-            Save Your Electricity Bills with Solar Energy
-          </h1>
-          <p className="mt-6 max-w-3xl text-lg text-blue-100">
-            Install high-quality solar panels with trusted brands like Tata Power Solar, Adani Solar, and Waaree Energies.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <button
-              type="button"
-              className="rounded-full bg-solar-yellow-400 px-7 py-3 font-semibold text-solar-blue-900 transition hover:bg-solar-yellow-300"
-            >
-              Get Free Site Visit
-            </button>
-            <button
-              type="button"
-              className="rounded-full border border-white/70 px-7 py-3 font-semibold text-white transition hover:bg-white/10"
-            >
-              Get Quote
-            </button>
-          </div>
-        </div>
-      </section>
+        <section
+          id="features"
+          className="relative isolate overflow-hidden bg-slate-900 text-white"
+          style={{
+            backgroundImage: "url('/image/background.jpg')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        >
+          <div className="absolute inset-0 bg-linear-to-r from-solar-blue-900/80 via-solar-blue-900/70 to-slate-900/60" />
+          <div className="absolute inset-0 bg-slate-900/25" />
 
-      <section className="mx-auto max-w-6xl px-6 py-16">
+          <div className="relative mx-auto flex min-h-[72vh] max-w-6xl items-center px-4 py-16 sm:px-6 sm:py-20 md:min-h-[80vh] md:py-28">
+            <div className="max-w-3xl">
+              <p className="mb-4 inline-block rounded-full bg-solar-yellow-300 px-4 py-1 text-xs font-semibold tracking-wide text-solar-blue-900 sm:text-sm">
+                Trusted Residential Solar Partner
+              </p>
+              <h1 className="text-3xl font-bold leading-tight sm:text-4xl md:text-6xl">
+                Save Your Electricity Bills with Solar Energy
+              </h1>
+              <p className="mt-5 max-w-2xl text-base text-blue-100 sm:text-lg">
+                Install high-quality solar panels with trusted brands like Tata Power Solar, Adani Solar, and Waaree Energies.
+              </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+                <button
+                  type="button"
+                  className="rounded-full bg-solar-yellow-400 px-6 py-3 font-semibold text-solar-blue-900 transition hover:bg-solar-yellow-300 sm:px-7"
+                >
+                  Get Free Site Visit
+                </button>
+                <button
+                  type="button"
+                  className="rounded-full border border-white/70 bg-white/10 px-6 py-3 font-semibold text-white backdrop-blur-sm transition hover:bg-white/20 sm:px-7"
+                >
+                  Get Quote
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      <section ref={howItWorksRef} className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <h2 className="text-3xl font-bold text-solar-blue-900 md:text-4xl">How It Works</h2>
         <p className="mt-3 max-w-2xl text-slate-600">
           A simple, transparent process designed for homeowners who want clean energy without confusion.
         </p>
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
-          {processSteps.map((step, index) => (
-            <div
-              key={step}
-              className="rounded-xl border border-solar-blue-100 bg-white p-5 shadow-sm"
+        <div className="mt-8 grid items-start gap-6 lg:grid-cols-2">
+          <div
+            className={`overflow-hidden rounded-2xl border border-white/40 bg-white/50 shadow-xl backdrop-blur-md transition-all duration-700 ${
+              isHowItWorksVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+            }`}
+          >
+            <video
+              className="h-full min-h-[220px] w-full object-cover sm:min-h-[300px] lg:min-h-[440px]"
+              controls
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              poster="/image/background.jpg"
             >
-              <p className="text-sm font-semibold text-solar-orange-600">Step {index + 1}</p>
-              <p className="mt-1 font-medium text-slate-800">{step}</p>
-            </div>
-          ))}
+              {isHowItWorksVisible ? (
+                <source
+                  src="/YTDown_YouTube_Innovative-Solar-Panels-3D-Animation-Sho_Media_5L7JN3nIyDc_002_720p.mp4"
+                  type="video/mp4"
+                />
+              ) : null}
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {processSteps.map((step, index) => (
+              <div
+                key={step}
+                className={`rounded-xl border border-solar-blue-100 bg-white p-5 shadow-sm transition-all duration-700 ${
+                  isHowItWorksVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
+                }`}
+                style={{ transitionDelay: `${index * 70}ms` }}
+              >
+                <p className="text-sm font-semibold text-solar-orange-600">Step {index + 1}</p>
+                <p className="mt-1 font-medium text-slate-800">{step}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
