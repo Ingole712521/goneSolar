@@ -1,3 +1,16 @@
+import { useState } from 'react'
+import {
+  MobileNav,
+  MobileNavHeader,
+  MobileNavMenu,
+  MobileNavToggle,
+  NavBody,
+  NavItems,
+  Navbar,
+  NavbarButton,
+  NavbarLogo,
+} from './components/ui/resizable-navbar'
+
 const processSteps = [
   'Customer Inquiry',
   'Free Site Visit',
@@ -38,9 +51,59 @@ const testimonials = [
 ]
 
 function App() {
+  const navItems = [
+    { name: 'Features', link: '#features' },
+    { name: 'Pricing', link: '#pricing' },
+    { name: 'Contact', link: '#contact' },
+  ]
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   return (
-    <main className="text-slate-900">
-      <section className="bg-linear-to-r from-solar-blue-900 to-solar-blue-600 text-white">
+    <div className="relative">
+      <Navbar>
+        <NavBody>
+          <NavbarLogo />
+          <NavItems items={navItems} />
+          <div className="flex items-center gap-4">
+            <NavbarButton variant="secondary">Login</NavbarButton>
+            <NavbarButton variant="primary">Book a call</NavbarButton>
+          </div>
+        </NavBody>
+
+        <MobileNav>
+          <MobileNavHeader>
+            <NavbarLogo />
+            <MobileNavToggle
+              isOpen={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            />
+          </MobileNavHeader>
+
+          <MobileNavMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)}>
+            {navItems.map((item, idx) => (
+              <a
+                key={`mobile-link-${idx}`}
+                href={item.link}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="font-medium text-slate-700 transition hover:text-solar-blue-700"
+              >
+                <span className="block">{item.name}</span>
+              </a>
+            ))}
+            <div className="flex w-full flex-col gap-3">
+              <NavbarButton onClick={() => setIsMobileMenuOpen(false)} variant="secondary" className="w-full">
+                Login
+              </NavbarButton>
+              <NavbarButton onClick={() => setIsMobileMenuOpen(false)} variant="primary" className="w-full">
+                Book a call
+              </NavbarButton>
+            </div>
+          </MobileNavMenu>
+        </MobileNav>
+      </Navbar>
+
+      <main className="pt-20 text-slate-900">
+      <section id="features" className="bg-linear-to-r from-solar-blue-900 to-solar-blue-600 text-white">
         <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
           <p className="mb-4 inline-block rounded-full bg-solar-yellow-300 px-4 py-1 text-sm font-semibold text-solar-blue-900">
             Trusted Residential Solar Partner
@@ -86,7 +149,7 @@ function App() {
         </div>
       </section>
 
-      <section className="bg-white">
+      <section id="pricing" className="bg-white">
         <div className="mx-auto grid max-w-6xl gap-8 px-6 py-16 md:grid-cols-2">
           <article className="rounded-2xl border border-solar-orange-100 bg-solar-orange-100/40 p-8">
             <h3 className="text-2xl font-bold text-solar-blue-900">Pricing</h3>
@@ -118,7 +181,7 @@ function App() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-16">
+      <section id="contact" className="mx-auto max-w-6xl px-6 py-16">
         <h2 className="text-3xl font-bold text-solar-blue-900 md:text-4xl">Why Choose Solar</h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           {benefits.map((benefit) => (
@@ -233,7 +296,8 @@ function App() {
           </button>
         </div>
       </section>
-    </main>
+      </main>
+    </div>
   )
 }
 
